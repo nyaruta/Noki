@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Setup JDK 21
         uses: actions/setup-java@v4
@@ -29,13 +32,14 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Setup signing
+        if: github.event_name == 'push' && github.repository_owner == 'nyaruta'
         run: |
           echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
           {
             echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}"
             echo "keyPassword=${{ secrets.KEY_PASSWORD }}"
             echo "keyAlias=${{ secrets.KEY_ALIAS }}"
-            echo "storeFile=keystore.jks"
+            echo "storeFile=${{ github.workspace}}/keystore.jks"
           } > key.properties
 
       - name: Build with Gradle
