@@ -19,4 +19,6 @@ material = { group = "com.google.android.material", name = "material", version.r
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+lsplugin-apktransform = { id = "org.lsposed.lsplugin.apktransform", version = "1.2" }
+
 
